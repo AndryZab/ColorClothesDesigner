@@ -1,0 +1,193 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AllClothes
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 3
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_IgnorePlatformSupport: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 56aef38eed073ca40bd6c5c344c7acb1, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 645002107a66bad479fff5651c56cb36: 21300000
+    - a4b1fa3055526674dbf97f41debb64f3: 21300000
+    - 63ba897028488b64ab51a04719ee5c3e: 21300000
+    - 5b453a90593787842b37b431ff891ced: 21300000
+    - f518fa81c1cd035419dc8ab65ebb5f7d: 21300000
+    - b2663bb17c0ec7b46a79458b9f1b96e0: 21300000
+    - a1273ff3b9a3f2041a61b256d13d2415: 21300000
+    - 1f360404b78318b4ab4d103437cd491b: 21300000
+    - f4578b24a5c722b4fa2af145e82161ed: 21300000
+    - 3fa63444de699ab46bb495e2c0aac822: 21300000
+    - f34ff35454780fe4e9257d351b5f3c53: 21300000
+    - 1fb720a4de5519d43af1fef0e807f21d: 21300000
+    - f7c17eb4df7c7f4479c598aa761f5198: 21300000
+    - dcc21dc486020bd499643c7ca540a93a: 21300000
+    - 1a19a3f4f8bc5f3408b1c6bef3afed3d: 21300000
+    - 142e87055a46a9641a33605a4de4b9b3: 21300000
+    - 0b3e0f05235efd74a9161f2b531e22ca: 21300000
+    - 0a9bc5850b358da4c9abecd95833f279: 21300000
+    - 9bf58a953ea0cbf4390499b8d2def973: 21300000
+    - db9abdc56a39f2941bea62697611392f: 21300000
+    - 9967df5654717ff43bbcd379ddeec78b: 21300000
+    - 5357eec71cc69604eb2b0024496c53c2: 21300000
+    - 310e70e7542257e4284a75ab999a34a6: 21300000
+    - aa025ce739689a54b86e4fa802d2e335: 21300000
+    - 2d4196285674c52419aa0f857b0685a9: 21300000
+    - 3e510838dd1a8e245b1bd5da5a78b1c0: 21300000
+    - 430da25890552514a96ce2448f8b6e84: 21300000
+    - 42cd13c8632731943b9833b433a6e0a2: 21300000
+    - 7791abc816a9bfd40b05817e625c2083: 21300000
+    - 68f3c1a9ad74b514cb5ebb4680b64290: 21300000
+    - 8cb3fdb9cc4948045aa81230339fb762: 21300000
+    - 6d72e3d96232eee4a80e2402c6328055: 21300000
+    - 8635dfca4f4dc854bbfb664690862b1e: 21300000
+    - 2aa437da8a0adea469808384be5a239c: 21300000
+    - 2857827c383a6e44493b9392d3ee057f: 21300000
+    - 8f2c5e8c8f453884fb3837bed57bd632: 21300000
+    - 7db313ac0e8ca0141955a9e0b3f74cb5: 21300000
+    - 7d221dcc88e594a4f8fe19a74f729b43: 21300000
+    - ebd5221d4c4f3c04690f30de993656a0: 21300000
+    - 2ba9151d48f1d354ca6e4e3d63bb339f: 21300000
+    - 2e471a7d403da5b4cb086ffe0330b8bd: 21300000
+    - 16f2f18dcd07d49459858f9f843b0d42: 21300000
+    - 732b93bd213e34e4baebaa570a79d1ba: 21300000
+    - 8495b75eaaba15942988d536fcb1de3a: 21300000
+    - 055550ce3e5c2f94f8ab94b752034851: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 645002107a66bad479fff5651c56cb36, type: 3}
+  - {fileID: 21300000, guid: a4b1fa3055526674dbf97f41debb64f3, type: 3}
+  - {fileID: 21300000, guid: 63ba897028488b64ab51a04719ee5c3e, type: 3}
+  - {fileID: 21300000, guid: 5b453a90593787842b37b431ff891ced, type: 3}
+  - {fileID: 21300000, guid: f518fa81c1cd035419dc8ab65ebb5f7d, type: 3}
+  - {fileID: 21300000, guid: b2663bb17c0ec7b46a79458b9f1b96e0, type: 3}
+  - {fileID: 21300000, guid: a1273ff3b9a3f2041a61b256d13d2415, type: 3}
+  - {fileID: 21300000, guid: 1f360404b78318b4ab4d103437cd491b, type: 3}
+  - {fileID: 21300000, guid: f4578b24a5c722b4fa2af145e82161ed, type: 3}
+  - {fileID: 21300000, guid: 3fa63444de699ab46bb495e2c0aac822, type: 3}
+  - {fileID: 21300000, guid: f34ff35454780fe4e9257d351b5f3c53, type: 3}
+  - {fileID: 21300000, guid: 1fb720a4de5519d43af1fef0e807f21d, type: 3}
+  - {fileID: 21300000, guid: f7c17eb4df7c7f4479c598aa761f5198, type: 3}
+  - {fileID: 21300000, guid: dcc21dc486020bd499643c7ca540a93a, type: 3}
+  - {fileID: 21300000, guid: 1a19a3f4f8bc5f3408b1c6bef3afed3d, type: 3}
+  - {fileID: 21300000, guid: 142e87055a46a9641a33605a4de4b9b3, type: 3}
+  - {fileID: 21300000, guid: 0b3e0f05235efd74a9161f2b531e22ca, type: 3}
+  - {fileID: 21300000, guid: 0a9bc5850b358da4c9abecd95833f279, type: 3}
+  - {fileID: 21300000, guid: 9bf58a953ea0cbf4390499b8d2def973, type: 3}
+  - {fileID: 21300000, guid: db9abdc56a39f2941bea62697611392f, type: 3}
+  - {fileID: 21300000, guid: 9967df5654717ff43bbcd379ddeec78b, type: 3}
+  - {fileID: 21300000, guid: 5357eec71cc69604eb2b0024496c53c2, type: 3}
+  - {fileID: 21300000, guid: 310e70e7542257e4284a75ab999a34a6, type: 3}
+  - {fileID: 21300000, guid: aa025ce739689a54b86e4fa802d2e335, type: 3}
+  - {fileID: 21300000, guid: 2d4196285674c52419aa0f857b0685a9, type: 3}
+  - {fileID: 21300000, guid: 3e510838dd1a8e245b1bd5da5a78b1c0, type: 3}
+  - {fileID: 21300000, guid: 430da25890552514a96ce2448f8b6e84, type: 3}
+  - {fileID: 21300000, guid: 42cd13c8632731943b9833b433a6e0a2, type: 3}
+  - {fileID: 21300000, guid: 7791abc816a9bfd40b05817e625c2083, type: 3}
+  - {fileID: 21300000, guid: 68f3c1a9ad74b514cb5ebb4680b64290, type: 3}
+  - {fileID: 21300000, guid: 8cb3fdb9cc4948045aa81230339fb762, type: 3}
+  - {fileID: 21300000, guid: 6d72e3d96232eee4a80e2402c6328055, type: 3}
+  - {fileID: 21300000, guid: 8635dfca4f4dc854bbfb664690862b1e, type: 3}
+  - {fileID: 21300000, guid: 2aa437da8a0adea469808384be5a239c, type: 3}
+  - {fileID: 21300000, guid: 2857827c383a6e44493b9392d3ee057f, type: 3}
+  - {fileID: 21300000, guid: 8f2c5e8c8f453884fb3837bed57bd632, type: 3}
+  - {fileID: 21300000, guid: 7db313ac0e8ca0141955a9e0b3f74cb5, type: 3}
+  - {fileID: 21300000, guid: 7d221dcc88e594a4f8fe19a74f729b43, type: 3}
+  - {fileID: 21300000, guid: ebd5221d4c4f3c04690f30de993656a0, type: 3}
+  - {fileID: 21300000, guid: 2ba9151d48f1d354ca6e4e3d63bb339f, type: 3}
+  - {fileID: 21300000, guid: 2e471a7d403da5b4cb086ffe0330b8bd, type: 3}
+  - {fileID: 21300000, guid: 16f2f18dcd07d49459858f9f843b0d42, type: 3}
+  - {fileID: 21300000, guid: 732b93bd213e34e4baebaa570a79d1ba, type: 3}
+  - {fileID: 21300000, guid: 8495b75eaaba15942988d536fcb1de3a, type: 3}
+  - {fileID: 21300000, guid: 055550ce3e5c2f94f8ab94b752034851, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Background copy 6
+  - Background copy 4
+  - Background copy
+  - Background copy 14
+  - hand-drawn-dress-outline-illustration copy 5
+  - Background copy 4
+  - hand-drawn-dress-outline-illustration
+  - Background copy 5
+  - Background copy 4
+  - Background copy
+  - Background copy 15
+  - hand-drawn-dress-outline-illustration copy 4
+  - Background copy 8
+  - Background copy
+  - Background copy 12
+  - Background
+  - Layer 1
+  - Layer 1
+  - Background copy 2
+  - Background copy 16
+  - Background
+  - Background copy 3
+  - Background copy 13
+  - Background copy 5
+  - Background copy 7
+  - Background copy 11
+  - Background copy 6
+  - Background copy 2
+  - Background copy 3
+  - Background copy 9
+  - hand-drawn-dress-outline-illustration copy 3
+  - hand-drawn-dress-outline-illustration copy 2
+  - hand-drawn-dress-outline-illustration copy 7
+  - Background copy 7
+  - Background copy 9
+  - Background copy 6
+  - Background copy 17
+  - Background copy 3
+  - Background copy 2
+  - hand-drawn-dress-outline-illustration copy
+  - hand-drawn-dress-outline-illustration copy 8
+  - Background copy 7
+  - hand-drawn-dress-outline-illustration copy 6
+  - Background
+  - Background copy 5
+  m_RenderDataMap: {}
+  m_Tag: AllClothes
+  m_IsVariant: 0

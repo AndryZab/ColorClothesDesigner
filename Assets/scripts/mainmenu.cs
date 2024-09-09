@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,8 +7,7 @@ public class mainmenu: MonoBehaviour
 {
     private bool isPlayingTranistions = false;
     private bool closeboard = false;
-    private GameObject objectToClose; 
-
+    private GameObject objectToClose;
 
     
     private void DeactivateObject()

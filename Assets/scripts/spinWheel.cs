@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class WheelFreeSpin : MonoBehaviour
 {

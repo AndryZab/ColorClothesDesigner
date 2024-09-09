@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -16,6 +15,7 @@ public class ShopSpins : MonoBehaviour
         public int price;
         public GameObject BuyButton;
         public int countSpin;
+        public TextMeshProUGUI priceText;
     }
     public GameObject NotEnoughMoney;
     [SerializeField] private List<ShopItem> shopItemList;
@@ -27,19 +27,16 @@ public class ShopSpins : MonoBehaviour
     private void Start()
     {
         audiomanager = FindAnyObjectByType<Audiomanager>();
-
-
-    }
-    private void Update()
-    {
-        if (PlayerPrefs.HasKey("CoinsBalance"))
+        foreach (var shop in shopItemList)
         {
-            LoadCoinsBalance();
+            shop.priceText.text = shop.price.ToString();
         }
+        LoadCoinsBalance();
     }
-
+   
     public void BuyItem(int itemIndex)
     {
+        LoadCoinsBalance();
         if (itemIndex < 0 || itemIndex >= shopItemList.Count)
         {
             return;

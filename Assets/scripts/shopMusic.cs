@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEditor.Build.Content;
 
 public class shopMusic : MonoBehaviour
 {
@@ -57,7 +56,10 @@ public class shopMusic : MonoBehaviour
         LoadPurchasedItems();
         SetupButtons();
         LoadButtonStates();
-
+        if (PlayerPrefs.HasKey("CoinsBalance"))
+        {
+            LoadCoinsBalance();
+        }
     }
 
     private void Update()
@@ -70,10 +72,7 @@ public class shopMusic : MonoBehaviour
                 currentItem.musicSlider.value = musicSource.time / musicSource.clip.length;
             }
         }
-        if (PlayerPrefs.HasKey("CoinsBalance"))
-        {
-            LoadCoinsBalance();
-        }
+       
     }
 
     public void buttonBackStopMusic()
@@ -143,6 +142,11 @@ public class shopMusic : MonoBehaviour
 
     public void BuyItem(int itemIndex)
     {
+        if (PlayerPrefs.HasKey("CoinsBalance"))
+        {
+            LoadCoinsBalance();
+        }
+
         if (itemIndex < 0 || itemIndex >= shopItemList.Count)
         {
             return;
@@ -187,7 +191,7 @@ public class shopMusic : MonoBehaviour
     {
         audiomanager.PlaySFX(audiomanager.equipitem);
 
-        // Hide the previous unequip button if it exists
+        
         if (currentEquippedIndex != -1 && currentEquippedIndex != index)
         {
             unequipButtons[currentEquippedIndex].SetActive(false);
@@ -204,7 +208,7 @@ public class shopMusic : MonoBehaviour
         }
         PlayerPrefs.SetInt("music_" + index, index);
 
-        // Equip the new item
+        
         currentEquippedIndex = index;
         unequipButtons[index].SetActive(true);
         equipButtons[index].SetActive(false);

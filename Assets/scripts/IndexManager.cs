@@ -1,7 +1,5 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 using static initializeSlotsInventory;
 
 public class IndexManager : MonoBehaviour
@@ -12,21 +10,49 @@ public class IndexManager : MonoBehaviour
     private int maxSlots = 15;
     public AutoProduction autoProduction;
     public string savedSlots = "ShirtSlots_UnlockedSlots";
+    private int countProces = 0;
+    private bool countAddProces;
+    public bool stop = true;
 
+    private bool ActiveChildrenCoroutine = false;
     private void Start()
     {
         inventory = FindObjectOfType<initializeSlotsInventory>();
         AssignIndexes();
-        StartCoroutine(UpdateRoutine()); 
     }
 
-    private IEnumerator UpdateRoutine()
+   
+    private void LateUpdate()
     {
-        while (true)
+        if (gameObject.activeInHierarchy && stop)
+        {
+            autoProduction.productCompleteUpdateObjects = true;
+            stop = false;
+
+        }
+
+        if (autoProduction.productCompleteUpdateObjects)
+        {
+             ActivateMatchingChildren();
+        }
+
+        if (ActiveChildrenCoroutine)
+        {
+          StartCoroutine(startActivate());
+
+        }
+      
+    }
+
+    private IEnumerator startActivate()
+    {
+        ActiveChildrenCoroutine = false;
+        yield return new WaitForSeconds(5);
+        if (autoProduction.countIndexForSaveProduct == 29)
         {
             ActivateMatchingChildren();
-            yield return new WaitForSeconds(1f); 
         }
+        ActiveChildrenCoroutine = true;
     }
 
     private void AssignIndexes()
@@ -60,7 +86,18 @@ public class IndexManager : MonoBehaviour
     private void ActivateMatchingChildren()
     {
         int activeCount = 0;
+        countAddProces = true;
+        if (countAddProces)
+        {
+            countProces++;
+        }
 
+        if (countProces >= 5)
+        {
+            countAddProces = false;
+            countProces = 0;
+            autoProduction.productCompleteUpdateObjects = false;
+        }
         foreach (Transform frameShirt in parentObject.transform)
         {
             bool shouldActivate = true;
@@ -106,5 +143,6 @@ public class IndexManager : MonoBehaviour
                 active.countActiveClothes = activeCount;
             }
         }
+
     }
 }

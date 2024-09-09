@@ -39,19 +39,7 @@ public class paintClothes : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-            if (hit.collider != null)
-            {
-                Image image = hit.collider.GetComponent<Image>();
-                if (image != null)
-                {
-                    PaintSection(image);
-                }
-            }
-        }
+        
     }
 
     private void PaintSection(Image image)
@@ -66,7 +54,11 @@ public class paintClothes : MonoBehaviour
 
         if (section != null && CanPaintSection(section, selectedColor))
         {
-            audioManager.PlaySFX(audioManager.paintButton);
+            if (image.color != selectedColor)
+            {
+               audioManager.PlaySFX(audioManager.paintButton);
+
+            }
             image.color = selectedColor;
             
             SaveColorAndIndex(section, image.color);

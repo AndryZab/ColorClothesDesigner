@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 
 public class shop : MonoBehaviour
 {
@@ -34,6 +32,7 @@ public class shop : MonoBehaviour
         
         LoadPurchasedItems();
        
+       
         UpdateCoinsUI();
         SetupButtons();
         LoadButtonStates();
@@ -44,15 +43,12 @@ public class shop : MonoBehaviour
                 item.pricetext.text = item.price.ToString();
             }
         }
-    }
-    private void Update()
-    {
         if (PlayerPrefs.HasKey("CoinsBalance"))
         {
             LoadCoinsBalance();
-            UpdateCoinsUI();
         }
     }
+   
     private void SetupButtons()
     {
         foreach (var item in shopItemList)
@@ -66,6 +62,11 @@ public class shop : MonoBehaviour
     }
     public void BuyItem(int itemIndex)
     {
+        if (PlayerPrefs.HasKey("CoinsBalance"))
+        {
+            LoadCoinsBalance();
+            UpdateCoinsUI();
+        }
         if (itemIndex < 0 || itemIndex >= shopItemList.Count)
         {
             return;
@@ -191,6 +192,7 @@ public class shop : MonoBehaviour
                 }
             }
 
+            Stateitem.LoadBackgroundsState();
             unequipButtons[index].SetActive(false);
             equipButtons[index].SetActive(true);
 
@@ -202,13 +204,13 @@ public class shop : MonoBehaviour
             PlayerPrefs.SetInt("BackEquipButtonState_" + index, 1);
             PlayerPrefs.SetInt("BackUnequipButtonState_" + index, 0);
             PlayerPrefs.Save();
-            Stateitem.LoadBackgroundsState();
 
         }
 
+
     }
 
-   
+
 
     private void LoadButtonStates()
     {

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -55,33 +53,13 @@ public class SelectForSell : MonoBehaviour
     {
         if (gameObject.activeInHierarchy)
         {
-            Debug.Log($"SellObjects: {sellObjects}, CountToDelete: {countToDelete}");
             PlayerPrefs.SetInt(sellObjects, countToDelete);
             SceneManager.LoadScene("SellMiniGame");
         }
         
 
     }
-    public void ButtonActivePanels(int activePanel)
-    {
-        if (activePanel >= 0 && activePanel < panelsSelected.Length)
-        {
-            
-            GameObject panel = panelsSelected[activePanel];
-            bool wasActive = panel.activeSelf;
-
-            
-            panel.SetActive(!wasActive);
-            if (audiomanager != null && wasActive)
-            {
-                audiomanager.PlaySFX(audiomanager.Deselect);
-            }
-            else if (audiomanager != null && !wasActive)
-            {
-                audiomanager.PlaySFX(audiomanager.Select);
-            }
-        }
-    }
+    
     public void ButtonActiveAllPanels()
     {
         foreach (GameObject panel in panelsSelected)
@@ -97,6 +75,20 @@ public class SelectForSell : MonoBehaviour
             }
         }
     }
+    public void ButtonInactiveAllPanels()
+    {
+        foreach (GameObject panel in panelsSelected)
+        {
+            Transform parentTransform = panel.transform.parent;
+            if (parentTransform != null && parentTransform.gameObject.activeSelf)
+            {
+                panel.SetActive(false); 
+            }
+           
+        }
+    }
 
-  
+
+
+
 }

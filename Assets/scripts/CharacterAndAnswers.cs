@@ -3,9 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Collections;
-using System.Runtime.CompilerServices;
 
 public class CharactersAndAnswers : MonoBehaviour
 {

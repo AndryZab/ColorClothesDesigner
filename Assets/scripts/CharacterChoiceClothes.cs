@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 using static Victory;
 
 public class CharacterChoiceClothes : MonoBehaviour
@@ -401,41 +400,29 @@ public class CharacterChoiceClothes : MonoBehaviour
     {
         if (gameObject.activeInHierarchy)
         {
-            int maxColorShirtIndex = SellSlots * limitClothes; 
-            int maxIndexKeyValue = FindMaxIndexKeyValue(); 
+            int maxColorShirtIndex = SellSlots * limitClothes;
 
             
             int keysToDelete = maxColorShirtIndex;
-            int endIndexForInitialClothes = maxIndexKeyValue;
+            int currentIndex = 1;
 
-            for (int i = endIndexForInitialClothes; i >= 1 && keysToDelete > 0; i--)
+            while (keysToDelete > 0)
             {
-                string key = clothesElements + i;
+                string key = clothesElements + currentIndex;
+
                 if (PlayerPrefs.HasKey(key))
                 {
                     PlayerPrefs.DeleteKey(key);
                     keysToDelete--;
                 }
+
+                currentIndex++;
             }
 
-            if (keysToDelete > 0)
-            {
-                int startIndexForFinalClothes = maxIndexKeyValue + 1;
-                int endIndexForFinalClothes = 210;
-
-                for (int i = startIndexForFinalClothes; i <= endIndexForFinalClothes && keysToDelete > 0; i++)
-                {
-                    string key = clothesElements + i;
-                    if (PlayerPrefs.HasKey(key))
-                    {
-                        PlayerPrefs.DeleteKey(key);
-                        keysToDelete--;
-                    }
-                }
-            }
-
+            
             UpdateIndexKeys();
 
+            
             if (PlayerPrefs.HasKey(slotsforSell))
             {
                 PlayerPrefs.DeleteKey(slotsforSell);
@@ -443,26 +430,11 @@ public class CharacterChoiceClothes : MonoBehaviour
         }
     }
 
-    private int FindMaxIndexKeyValue()
-    {
-        int maxValue = 0;
-        foreach (string indexKey in indexKeys)
-        {
-            if (PlayerPrefs.HasKey(indexKey))
-            {
-                if (int.TryParse(PlayerPrefs.GetString(indexKey), out int value))
-                {
-                    maxValue = Mathf.Max(maxValue, value);
-                }
-            }
-        }
-        return maxValue;
-    }
-
     private void UpdateIndexKeys()
     {
         int startIndex = 1;
 
+        
         foreach (string indexKey in indexKeys)
         {
             if (PlayerPrefs.HasKey(indexKey))
@@ -470,11 +442,16 @@ public class CharacterChoiceClothes : MonoBehaviour
                 PlayerPrefs.DeleteKey(indexKey);
             }
 
-            PlayerPrefs.SetString(indexKey, startIndex.ToString());
+            
             startIndex++;
+
+            
+            if (startIndex > 7)
+            {
+                break;
+            }
         }
     }
-
 
 
 

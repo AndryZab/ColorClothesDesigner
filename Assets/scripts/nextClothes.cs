@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -111,6 +110,7 @@ public class CheckColorsAndAnimate : MonoBehaviour
                         PlayerPrefs.SetString(key, clotheScript.sections.index);
 
                         PlayerPrefs.Save();
+                        LoadIndexes();
                     }
                 }
             }
@@ -151,7 +151,6 @@ public class CheckColorsAndAnimate : MonoBehaviour
 
     private void Update()
     {
-        LoadIndexes();
         if (currentIndex == 5)
         {
             currentIndex = 0;

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using static initializeSlotsInventory;
@@ -36,9 +35,14 @@ public class AutoProduction : MonoBehaviour
 
     private bool isCoroutineRunningStart = false;
     private bool isCoroutineRunningUpdate = false;
+
+    public bool productCompleteUpdateObjects = true;
+    private Coroutine fillCoroutine;
+
     private void Start()
     {
         saveInterval = PlayerPrefs.GetFloat(savedTimeProduct, defaultSaveInterval);
+        fillDuration = PlayerPrefs.GetFloat(savedFillBar, fillDuration);
 
         inventory = FindAnyObjectByType<initializeSlotsInventory>();
         InitializeColors();
@@ -46,9 +50,11 @@ public class AutoProduction : MonoBehaviour
         {
             StartCoroutine(SaveIndicesCoroutine());
         }
+        UpdateTimeText();
+        
     }
    
-    private void UpdateTimeText()
+    public void UpdateTimeText()
     {
         fillDuration = PlayerPrefs.GetFloat(savedFillBar, fillDuration);
 
@@ -83,7 +89,7 @@ public class AutoProduction : MonoBehaviour
     }
    
 
-    private void Update()
+    private void LateUpdate()
     {
 
         foreach (sectionsSlots inv in inventory.slots)
@@ -101,37 +107,45 @@ public class AutoProduction : MonoBehaviour
         }
 
 
-        saveInterval = PlayerPrefs.GetFloat(savedTimeProduct, defaultSaveInterval);
 
-        UpdateTimeText();
 
-        if (fillImage != null)
+       if (maxSlots == countProductionForActiveObjects && fillImage != null)
+       {
+            fillImage.fillAmount = 1f;
+       }
+
+       if (maxSlots != countProductionForActiveObjects && fillImage != null)
         {
             elapsedTime += Time.deltaTime;
-            fillAmount = Mathf.Clamp01(elapsedTime / fillDuration);
+            float newFillAmount = Mathf.Clamp01(elapsedTime / fillDuration);
 
-            if (fillAmount >= 1f)
+
+            if (Mathf.Abs(newFillAmount - fillImage.fillAmount) > 0.001f)
             {
-                fillImage.enabled = false;
-                
-                fillAmount = 0f;
-                elapsedTime = 0f;
-                fillImage.enabled = true;
+                fillImage.fillAmount = newFillAmount;
             }
 
-            fillImage.fillAmount = fillAmount;
-        }
-    }
 
+            if (newFillAmount >= 1f)
+            {
+                elapsedTime = 0f;
+                fillImage.fillAmount = 0f;
+            }
+        }
+       
+
+
+    }
+   
     private IEnumerator SaveIndicesCoroutine()
     {
         isCoroutineRunningStart = true;
         isCoroutineRunningUpdate = false;
 
-        int startIndex = 210;
+        int startIndexs = startIndex;
         int endIndex = 1;
 
-        for (int i = startIndex; i >= endIndex; i--)
+        for (int i = startIndexs; i >= endIndex; i--)
         {
             if (maxSlots > countProductionForActiveObjects)
             {
@@ -139,9 +153,9 @@ public class AutoProduction : MonoBehaviour
                 if (!PlayerPrefs.HasKey(key))
                 {
                     PlayerPrefs.SetInt(key, i);
-
                     int value = PlayerPrefs.GetInt(key, i);
 
+                   
 
                     PlayerPrefs.Save();
 
@@ -158,9 +172,10 @@ public class AutoProduction : MonoBehaviour
 
                         countProduction++;
 
+
                         PlayerPrefs.SetInt(savedCounts, countProduction);
                         PlayerPrefs.Save();
-
+                        productCompleteUpdateObjects = true;
                     }
 
                     int colorIndex = i;
@@ -169,6 +184,8 @@ public class AutoProduction : MonoBehaviour
                         if (hasUnlockedColors)
                         {
                             clothesElements[colorIndex].color = GetRandomUnlockedColor();
+
+                            
                         }
                     }
 
@@ -182,16 +199,14 @@ public class AutoProduction : MonoBehaviour
                     yield return new WaitForSeconds(saveInterval);
 
                 }
-
-
             }
         }
 
         isCoroutineRunningStart = false;
         PlayerPrefs.Save();
         isCoroutineRunningUpdate = true;
-
     }
+
 
 
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using static UpgradeProductionAndWarehouse;
 
 public class UpgradeProductionAndWarehouse : MonoBehaviour
 {
@@ -19,8 +19,13 @@ public class UpgradeProductionAndWarehouse : MonoBehaviour
         public GameObject PanelMaxUpgrade;
         public GameObject PanelLock;
         public float multiplier = 1.0f;
-        public int fillDurationMaxed;
         public string IndexForUnlockColors;
+        public float newFloatInverval;
+
+        [Header("InitializeSettings")]
+        public float saveIntervalMAX = 0;
+        public float fillDurationMaxed;
+
     }
 
     [Serializable]
@@ -40,15 +45,15 @@ public class UpgradeProductionAndWarehouse : MonoBehaviour
     public List<warehouseUpgrade> warehouses = new List<warehouseUpgrade>();
     private int coinsBalance;
     private Audiomanager audiomanager;
+    private HashSet<string> processedKeys = new HashSet<string>();
+
+    private initializeSlotsInventory inventoryslots;
 
     private void Start()
     {
+        inventoryslots = FindObjectOfType<initializeSlotsInventory>();
         colorUnlockScript = FindObjectOfType<ColorUnlockScript>();
         audiomanager = FindAnyObjectByType<Audiomanager>();
-    }
-
-    private void Update()
-    {
         if (PlayerPrefs.HasKey("CoinsBalance"))
         {
             coinsBalance = PlayerPrefs.GetInt("CoinsBalance");
@@ -67,7 +72,7 @@ public class UpgradeProductionAndWarehouse : MonoBehaviour
                 autoProduct.autoProductionScript.fillDuration = PlayerPrefs.GetFloat(autoProduct.name + "_decraseTimeFill_", autoProduct.autoProductionScript.fillDuration);
             }
 
-            if (autoProduct.PanelMaxUpgrade != null && autoProduct.autoProductionScript != null && autoProduct.autoProductionScript.fillDuration < autoProduct.fillDurationMaxed)
+            if (autoProduct.PanelMaxUpgrade != null && autoProduct.autoProductionScript != null && autoProduct.autoProductionScript.fillDuration <= autoProduct.fillDurationMaxed)
             {
                 autoProduct.PanelMaxUpgrade.SetActive(true);
                 if (autoProduct.coinsbar1Text != null)
@@ -100,6 +105,8 @@ public class UpgradeProductionAndWarehouse : MonoBehaviour
             }
         }
 
+
+
         foreach (warehouseUpgrade warehouse in warehouses)
         {
             if (PlayerPrefs.HasKey(warehouse.name + "_UnlockedSlots"))
@@ -120,6 +127,8 @@ public class UpgradeProductionAndWarehouse : MonoBehaviour
             if (warehouse.maxSlots >= 30 && warehouse.panelMaxUpgrades != null)
             {
                 warehouse.panelMaxUpgrades.SetActive(true);
+                warehouse.coinsbarTextSlots.gameObject.SetActive(false);
+
             }
 
             if (warehouse.coinsbarTextSlots != null)
@@ -129,6 +138,90 @@ public class UpgradeProductionAndWarehouse : MonoBehaviour
         }
 
         coinsbalancecheck();
+
+        foreach (ProductUpgrade colorsUnlock in Product)
+        {
+            if (colorsUnlock.PanelLock != null && !colorsUnlock.PanelLock.activeSelf)
+            {
+                if (colorsUnlock.autoProductionScript != null)
+                {
+                    colorsUnlock.autoProductionScript.gameObject.SetActive(true);
+                }
+            }
+
+            colorsUnlock.countColorUnlocks = 0;
+
+            if (colorUnlockScript != null)
+            {
+                foreach (GameObject unlockColors in colorUnlockScript.panelforUnlock)
+                {
+                    if (unlockColors != null && !unlockColors.activeSelf)
+                    {
+                        colorsUnlock.countColorUnlocks++;
+                    }
+                }
+            }
+
+            if (colorsUnlock.TextNeedColorUnlockCounts != null)
+            {
+                colorsUnlock.TextNeedColorUnlockCounts.text = "You need unlock " + colorsUnlock.countColorUnlocks.ToString() + "/" + colorsUnlock.NeedColorsForUnlockProduct.ToString() + " colors";
+            }
+        }
+
+    }
+
+    private void LateUpdate()
+    {
+       
+
+        
+
+        foreach (ProductUpgrade autoProduct in Product)
+        {
+            if (autoProduct.PanelMaxUpgrade != null && autoProduct.autoProductionScript != null && autoProduct.autoProductionScript.fillDuration <= autoProduct.fillDurationMaxed)
+            {
+                autoProduct.PanelMaxUpgrade.SetActive(true);
+                if (autoProduct.coinsbar1Text != null)
+                {
+                    autoProduct.coinsbar1Text.gameObject.SetActive(false);
+                }
+            }
+
+
+
+            if (colorUnlockScript != null && colorUnlockScript.panelUnlockSucces)
+            {
+                string key = PlayerPrefs.GetString(autoProduct.IndexForUnlockColors);
+                if (key == autoProduct.IndexForUnlockColors)
+                {
+                    if (autoProduct.PanelLock != null)
+                    {
+                        autoProduct.PanelLock.SetActive(false);
+                    }
+                    if (autoProduct.autoProductionScript != null)
+                    {
+                        autoProduct.autoProductionScript.gameObject.SetActive(true);
+                    }
+                    colorUnlockScript.panelUnlockSucces = false;
+                }
+            }
+
+
+        }
+
+        foreach (warehouseUpgrade warehouse in warehouses)
+        {
+            
+            if (warehouse.maxSlots >= 30 && warehouse.panelMaxUpgrades != null)
+            {
+                warehouse.panelMaxUpgrades.SetActive(true);
+                warehouse.coinsbarTextSlots.gameObject.SetActive(false);
+
+            }
+
+            
+        }
+
 
         foreach (ProductUpgrade colorsUnlock in Product)
         {
@@ -191,9 +284,8 @@ public class UpgradeProductionAndWarehouse : MonoBehaviour
                 float currentSaveInterval = PlayerPrefs.GetFloat(AutoProduct.name + "_decraseTime_", AutoProduct.autoProductionScript.saveInterval);
                 float currentFillDuration = PlayerPrefs.GetFloat(AutoProduct.name + "_decraseTimeFill_", AutoProduct.autoProductionScript.fillDuration);
 
-                float decreaseAmount = 0.01f * AutoProduct.multiplier;
-                float newSaveInterval = Mathf.Max(Mathf.Round((currentSaveInterval - decreaseAmount) * 10) / 10, 0.01f);
-                float newFillDuration = Mathf.Max(Mathf.Round((currentFillDuration - decreaseAmount * AutoProduct.multiplier) * 10) / 10, 1f);
+                float newSaveInterval = Mathf.Max(currentSaveInterval - AutoProduct.newFloatInverval, AutoProduct.newFloatInverval);
+                float newFillDuration = Mathf.Max(currentFillDuration - 0.5f, 0.5f);
 
                 AutoProduct.autoProductionScript.saveInterval = newSaveInterval;
                 AutoProduct.autoProductionScript.fillDuration = newFillDuration;
@@ -202,12 +294,22 @@ public class UpgradeProductionAndWarehouse : MonoBehaviour
                 PlayerPrefs.SetFloat(AutoProduct.name + "_decraseTimeFill_", newFillDuration);
                 PlayerPrefs.Save();
 
-                AutoProduct.upgradeCostbar1 += 50;
+                AutoProduct.upgradeCostbar1 += 170;
 
                 PlayerPrefs.SetInt(AutoProduct.name + "_UpgradeCostbar1", AutoProduct.upgradeCostbar1);
                 PlayerPrefs.Save();
 
+                if (AutoProduct.autoProductionScript != null)
+                {
+                    AutoProduct.autoProductionScript.saveInterval = PlayerPrefs.GetFloat(AutoProduct.name + "_decraseTime_", AutoProduct.autoProductionScript.saveInterval);
+
+                    AutoProduct.autoProductionScript.fillDuration = PlayerPrefs.GetFloat(AutoProduct.name + "_decraseTimeFill_", AutoProduct.autoProductionScript.fillDuration);
+
+
+                }
                 AutoProduct.coinsbar1Text.text = "- 0.5 seconds for " + AutoProduct.upgradeCostbar1.ToString();
+                AutoProduct.autoProductionScript.saveInterval = PlayerPrefs.GetFloat(AutoProduct.autoProductionScript.savedTimeProduct, AutoProduct.autoProductionScript.defaultSaveInterval);
+                AutoProduct.autoProductionScript.UpdateTimeText();
             }
         }
     }
@@ -235,19 +337,28 @@ public class UpgradeProductionAndWarehouse : MonoBehaviour
                 PlayerPrefs.SetInt(WarehouseUpgrade.name + "_UnlockedSlots", currentMaxSlots);
                 PlayerPrefs.Save();
 
-                if (WarehouseUpgrade.maxSlots >= 30)
-                {
-                    WarehouseUpgrade.panelMaxUpgrades.SetActive(true);
-                    WarehouseUpgrade.coinsbarTextSlots.gameObject.SetActive(false);
-                }
+              
 
-                WarehouseUpgrade.upgradeCostbarSlots += 30;
+                WarehouseUpgrade.upgradeCostbarSlots += 110;
 
                 PlayerPrefs.SetInt(WarehouseUpgrade.name + "_UpgradeCostbarSlots", WarehouseUpgrade.upgradeCostbarSlots);
                 PlayerPrefs.Save();
 
+                if (PlayerPrefs.HasKey(WarehouseUpgrade.name + "_UpgradeCostbarSlots"))
+                {
+                    WarehouseUpgrade.upgradeCostbarSlots = PlayerPrefs.GetInt(WarehouseUpgrade.name + "_UpgradeCostbarSlots");
+                }
+                if (PlayerPrefs.HasKey(WarehouseUpgrade.name + "_UnlockedSlots"))
+                {
+                    WarehouseUpgrade.maxSlots = PlayerPrefs.GetInt(WarehouseUpgrade.name + "_UnlockedSlots", 15);
+                }
+
                 WarehouseUpgrade.coinsbarTextSlots.text = "+ 1 slot for " + WarehouseUpgrade.upgradeCostbarSlots.ToString();
                 WarehouseUpgrade.countSlots.text = "Slots Available " + WarehouseUpgrade.maxSlots.ToString() + "/30";
+                
+
+
+                inventoryslots.InitializeSlots();
             }
         }
     }

@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ColorUnlockScript : MonoBehaviour
 {
@@ -19,14 +17,20 @@ public class ColorUnlockScript : MonoBehaviour
     private float timeSinceLastUpdate = 0.0f;
     private int productionCompleteCount;
 
+    private HashSet<string> processedKeys = new HashSet<string>();
+
+    public bool panelUnlockSucces = false;
     private void Start()
     {
         audiomanager = FindObjectOfType<Audiomanager>();
         LoadButtonStates();
+        EnsureInitialColorUnlocks();
     }
 
     private void Update()
     {
+
+        StartEnsuer();
         timeSinceLastUpdate += Time.deltaTime;
 
         if (timeSinceLastUpdate >= updateInterval)
@@ -35,7 +39,6 @@ public class ColorUnlockScript : MonoBehaviour
 
             UpdateProductionText();
             CheckAndUpdatePlayerPrefs();
-            EnsureInitialColorUnlocks();
             DeactivatePanelsBasedOnColorUnlock();
 
 
@@ -57,6 +60,23 @@ public class ColorUnlockScript : MonoBehaviour
             }
 
 
+        }
+    }
+
+    private void StartEnsuer()
+    {
+        
+        for (int i = 5; i <= 9; i++)
+        {
+            if (i < panelforUnlock.Length && panelforUnlock[i].activeSelf)
+            {
+                string colorUnlockKey = "ColorUnlock_" + (i - 5); 
+                if (PlayerPrefs.HasKey(colorUnlockKey) && !processedKeys.Contains(colorUnlockKey))
+                {
+                    processedKeys.Add(colorUnlockKey);
+                    EnsureInitialColorUnlocks();
+                }
+            }
         }
     }
 
@@ -96,7 +116,7 @@ public class ColorUnlockScript : MonoBehaviour
 
     private void EnsureInitialColorUnlocks()
     {
-
+        panelUnlockSucces = true;
         for (int i = 0; i < 5; i++)
         {
             bool allKeysPresent = true;
@@ -120,25 +140,26 @@ public class ColorUnlockScript : MonoBehaviour
             "ColorUnlock_0", "ColorUnlock_1", "ColorUnlock_2", "ColorUnlock_3", "ColorUnlock_4",
         };
 
-        bool missingUnlocks = false;
+        bool missingUnlocks = true;
 
         foreach (string key in colorUnlockKeys)
         {
-            if (!PlayerPrefs.HasKey(key))
+            if (PlayerPrefs.HasKey(key))
             {
-                missingUnlocks = true;
+                missingUnlocks = false;
                 break;
             }
         }
 
         if (missingUnlocks)
         {
-            for (int i = 0; i <= 5; i++)
+          
+            for (int i = 0; i <= 3; i++)
             {
                 string key1 = "ColorActivate_" + i;
                 if (!PlayerPrefs.HasKey(key1))
                 {
-                    PlayerPrefs.SetString(key1, "Activated");
+                    PlayerPrefs.SetString(key1, "active");
                 }
 
                 string key2 = "ButtonState_" + i;
@@ -147,6 +168,11 @@ public class ColorUnlockScript : MonoBehaviour
                     PlayerPrefs.SetString(key2, "1");
                 }
                 PlayerPrefs.Save();
+            }
+            equippedIndices.Clear();
+            for (int i = 0; i < 4; i++)
+            {
+                equippedIndices.Add(i);
             }
         }
     }
@@ -181,7 +207,6 @@ public class ColorUnlockScript : MonoBehaviour
         {
             int firstEquippedIndex = equippedIndices[0];
             UnequipButton(firstEquippedIndex);
-            PlayerPrefs.DeleteKey("ColorActivate_" + firstEquippedIndex);
         }
         if (audiomanager != null)
         {
@@ -190,7 +215,7 @@ public class ColorUnlockScript : MonoBehaviour
 
         unequipButtons[index].SetActive(true);
         equipButtons[index].SetActive(false);
-        PlayerPrefs.SetString("ColorActivate_" + index, "Activated");
+        PlayerPrefs.SetString("ColorActivate_" + index, "active");
         SaveButtonState(index, true);
 
         equippedIndices.Add(index);
@@ -206,6 +231,7 @@ public class ColorUnlockScript : MonoBehaviour
         unequipButtons[index].SetActive(false);
         equipButtons[index].SetActive(true);
         PlayerPrefs.DeleteKey("ColorActivate_" + index);
+
         SaveButtonState(index, false);
 
         equippedIndices.Remove(index);

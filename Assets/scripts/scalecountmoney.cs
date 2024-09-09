@@ -1,16 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class scalecountmoney : MonoBehaviour
 {
     public TextMeshProUGUI textmoney;
-    private void Update()
+    private int coins;
+    private void LateUpdate()
     {
+        coins = PlayerPrefs.GetInt("CoinsBalance", 0);
+        if (coins < 10000 && textmoney.fontSize == 73)
+        {
+            return;
+        }
+        else if (coins >= 10000 && textmoney.fontSize == 57)
+        {
+            return;
+        }
+        else if (coins >= 100000 && textmoney.fontSize == 53)
+        {
+            return;
+        }
+
         if (PlayerPrefs.HasKey("CoinsBalance"))
         {
-            int coins = PlayerPrefs.GetInt("CoinsBalance");
             if (coins < 10000)
             {
                 textmoney.fontSize = 73;

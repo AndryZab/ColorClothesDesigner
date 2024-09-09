@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -17,12 +16,25 @@ public class initializeSlotsInventory : MonoBehaviour
     public GameObject panelForBlockPlay;
 
     public GameObject[] panelForBlockClothesObject;
+    public IndexManager[] indexmanager;
+
+    private void Start()
+    {
+        InitializeSlots();
+
+    }
+
     private void Update()
     {
-
+        foreach (var manager in indexmanager)
+        {
+            if (!manager.gameObject.activeInHierarchy)
+            {
+                manager.stop = true;
+            }
+        }
         bool shouldActivatePanel = false;
 
-        InitializeSlots();
         foreach (sectionsSlots slot in slots)
         {
 
@@ -43,14 +55,14 @@ public class initializeSlotsInventory : MonoBehaviour
 
 
     }
-    private void InitializeSlots()
+    public void InitializeSlots()
     {
         foreach (sectionsSlots slot in slots)
         {
+            
             if (PlayerPrefs.HasKey(slot.savedSlots))
             {
                 slot.slotsAvalible = PlayerPrefs.GetInt(slot.savedSlots);
-
             }
         }
 

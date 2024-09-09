@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class stateitem : MonoBehaviour
@@ -60,6 +59,8 @@ public class stateitem : MonoBehaviour
                 hasSavedState = true;
                 break;
             }
+
+           
         }
 
         if (hasSavedState)
@@ -89,6 +90,10 @@ public class stateitem : MonoBehaviour
             if (defaultbackground != null)
             {
                 defaultbackground.SetActive(true);
+            }
+            foreach (GameObject gameObject in backgrounds)
+            {
+                gameObject.SetActive(false);
             }
         }
     }

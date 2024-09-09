@@ -40,7 +40,7 @@ public class volumemeneger : MonoBehaviour
     public void SetMusisVolume()
     {
         float volume = musicslider.value;
-        float maxVolume = Mathf.Lerp(-50f, 0f, volume);
+        float maxVolume = Mathf.Lerp(-50f, 4f, volume);
         myMixer.SetFloat("music", maxVolume);
         PlayerPrefs.SetFloat("musicVolume", volume);
         PlayerPrefs.Save();
@@ -49,7 +49,7 @@ public class volumemeneger : MonoBehaviour
     public void SetSFXVolume()
     {
         float volume = musicSFXslider.value;
-        float maxVolume = Mathf.Lerp(-50f, 0f, volume);
+        float maxVolume = Mathf.Lerp(-50f, 4f, volume);
         myMixer.SetFloat("Sound", maxVolume);
         PlayerPrefs.SetFloat("SFXVolume", volume);
         PlayerPrefs.Save();
@@ -159,8 +159,6 @@ public class volumemeneger : MonoBehaviour
             }
         }
 
-        Debug.Log("Loaded SoundMuted: " + soundMuted);
-        Debug.Log("Loaded MusicMuted: " + musicMuted);
     }
 
     private void LoadVolume()
